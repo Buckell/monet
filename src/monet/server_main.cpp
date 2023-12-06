@@ -5,6 +5,7 @@
 #include <monet.hpp>
 
 namespace monet {
+
     void server::start() {
         m_running = true;
 
@@ -22,4 +23,5 @@ namespace monet {
     void server::poll() {
 
     }
+
 }

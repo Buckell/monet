@@ -13,6 +13,7 @@
 #include "interface/web_panel.hpp"
 
 namespace monet {
+
     class server {
         std::atomic_bool m_running;
         std::thread m_main_thread;
@@ -162,6 +163,7 @@ namespace monet {
             return m_web_panel_interface;
         }
     };
+
 }
 
 #endif //MASTER_SERVER_SERVER_HPP

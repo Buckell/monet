@@ -11,6 +11,7 @@
 #include "definitions.hpp"
 
 namespace monet::dmx {
+
     /**
      * @brief Stores data for one DMX universe.
      *
@@ -59,6 +60,7 @@ namespace monet::dmx {
              return a_index < dmx_universe_buffer_size ? m_data[a_index] : 0;
          }
     };
+
 }
 
 #endif //MASTER_SERVER_DMX_UNIVERSE_HPP

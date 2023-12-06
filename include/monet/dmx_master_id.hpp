@@ -10,6 +10,7 @@
 #include "definitions.hpp"
 
 namespace monet::dmx {
+
     /**
      * @brief Convert a DMX master ID to its respective universe and channel IDs.
      *
@@ -43,6 +44,8 @@ namespace monet::dmx {
      */
     constexpr size_t to_master_id(size_t const a_universe_id, size_t const a_channel_id) noexcept {
         return a_universe_id * dmx_data_channel_count + a_channel_id;
-    }}
+    }
+
+}
 
 #endif //MASTER_SERVER_DMX_MASTER_ID_HPP

@@ -6,9 +6,11 @@
 #define MASTER_SERVER_CONSOLE_CONTROLLER_HPP
 
 namespace monet {
+
     class console_controller {
 
     };
+
 }
 
 #endif //MASTER_SERVER_CONSOLE_CONTROLLER_HPP
