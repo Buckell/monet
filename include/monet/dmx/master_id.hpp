@@ -2,12 +2,12 @@
 // Created by maxng on 11/15/2023.
 //
 
-#ifndef MASTER_SERVER_DMX_MASTER_ID_HPP
-#define MASTER_SERVER_DMX_MASTER_ID_HPP
+#ifndef MASTER_SERVER_MASTER_ID_HPP
+#define MASTER_SERVER_MASTER_ID_HPP
 
 #include <tuple>
 
-#include "definitions.hpp"
+#include "monet/definitions.hpp"
 
 namespace monet::dmx {
 
@@ -48,4 +48,4 @@ namespace monet::dmx {
 
 }
 
-#endif //MASTER_SERVER_DMX_MASTER_ID_HPP
+#endif //MASTER_SERVER_MASTER_ID_HPP

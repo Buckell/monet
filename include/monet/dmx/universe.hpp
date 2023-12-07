@@ -2,13 +2,13 @@
 // Created by maxng on 11/13/2023.
 //
 
-#ifndef MASTER_SERVER_DMX_UNIVERSE_HPP
-#define MASTER_SERVER_DMX_UNIVERSE_HPP
+#ifndef MASTER_SERVER_UNIVERSE_HPP
+#define MASTER_SERVER_UNIVERSE_HPP
 
 #include <vector>
 #include <cstdint>
 
-#include "definitions.hpp"
+#include "monet/definitions.hpp"
 
 namespace monet::dmx {
 
@@ -63,4 +63,4 @@ namespace monet::dmx {
 
 }
 
-#endif //MASTER_SERVER_DMX_UNIVERSE_HPP
+#endif //MASTER_SERVER_UNIVERSE_HPP
