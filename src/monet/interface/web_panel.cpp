@@ -17,6 +17,13 @@ namespace monet::interface {
                 res.set_content("Hello, world!", "text/plain");
             });
 
+            // API request.
+            m_server->Get(R"(/api(.+))", [](httplib::Request const& req, httplib::Response& res) {
+                std::string api_path{req.matches[1]};
+
+                res.set_content(api_path + " - API", "text/plain");
+            });
+
             m_server->Get(R"(^(?!/api).+$)", [](httplib::Request const& req, httplib::Response& res) {
                 std::string request_path{req.matches[0]};
 
