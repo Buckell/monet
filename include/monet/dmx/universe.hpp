@@ -22,7 +22,9 @@ namespace monet::dmx {
         std::vector<std::uint8_t> m_data;
 
     public:
-        universe() : m_data() {
+        universe() :
+            m_data()
+        {
             m_data.resize(dmx_universe_buffer_size);
         }
 

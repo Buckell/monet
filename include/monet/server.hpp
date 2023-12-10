@@ -23,7 +23,12 @@ namespace monet {
         interface::web_panel m_web_panel_interface;
 
     public:
-        server() : m_running(false), m_main_thread(), m_dmx_universes(), m_web_panel_interface() {}
+        server() :
+            m_running(false),
+            m_main_thread(),
+            m_dmx_universes(),
+            m_web_panel_interface()
+        {}
 
         server(server const&) = delete;
         server(server&&)      = delete;
