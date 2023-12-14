@@ -37,6 +37,12 @@ namespace monet::channel::attribute {
         explicit attribute(std::string_view const a_name) : m_name(a_name) {}
 
     public:
+        attribute(attribute const&) = delete;
+        attribute(attribute&&)      = delete;
+
+        attribute& operator = (attribute const&) = delete;
+        attribute& operator = (attribute&&)      = delete;
+
         /**
          * @brief Get the name of the attribute.
          *
