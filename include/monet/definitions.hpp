@@ -14,6 +14,13 @@ namespace monet {
 
     constexpr uint16_t default_web_panel_port = 8080;
 
+
+    namespace channel {
+
+        using attribute_channel = size_t;
+
+    }
+
 }
 
 #endif //MASTER_SERVER_DEFINITIONS_HPP
