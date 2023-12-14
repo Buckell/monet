@@ -20,8 +20,8 @@
  *     bin - 1 for on, 0 for off
  *
  * intensity
- *     (default) - map 0 to 100 to 0 to 255
- *     exact - 0 to 100 value
+ *     (default) - 0 to 255
+ *     normal - 0 to 100
  *
  * color
  *     r - red channel of RGB (0-255)
