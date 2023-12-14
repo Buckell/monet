@@ -7,6 +7,7 @@
 
 #include "monet/channel/attribute/attribute.hpp"
 #include "monet/channel/attribute/intensity.hpp"
+#include "monet/channel/attribute/rgb_color.hpp"
 #include "monet/channel/address_mapping.hpp"
 #include "monet/channel/attribute_definition.hpp"
 #include "monet/channel/configuration.hpp"

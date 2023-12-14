@@ -23,7 +23,7 @@
  *     (default) - 0 to 255
  *     normal - 0 to 100
  *
- * color
+ * rgb_color
  *     r - red channel of RGB (0-255)
  *     g - green channel of RGB (0-255)
  *     b - blue channel of RGB (0-255)
