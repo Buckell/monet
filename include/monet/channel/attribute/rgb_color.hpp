@@ -40,6 +40,12 @@ namespace monet::channel::attribute {
             m_green(0)
         {}
 
+        rgb_color(rgb_color const&) noexcept = delete;
+        rgb_color(rgb_color&&) noexcept      = delete;
+
+        rgb_color& operator = (rgb_color const&) = delete;
+        rgb_color& operator = (rgb_color&&)      = delete;
+
         /**
          * @brief Get a list of available attribute channels.
          *

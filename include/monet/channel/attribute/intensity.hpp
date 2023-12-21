@@ -36,11 +36,11 @@ namespace monet::channel::attribute {
             m_intensity_value(0)
         {}
 
-        intensity(intensity const&) noexcept = default;
-        intensity(intensity&&) noexcept      = default;
+        intensity(intensity const&) noexcept = delete;
+        intensity(intensity&&) noexcept      = delete;
 
-        intensity& operator = (intensity const&) = default;
-        intensity& operator = (intensity&&)      = default;
+        intensity& operator = (intensity const&) = delete;
+        intensity& operator = (intensity&&)      = delete;
 
         /**
          * @brief Get a list of available attribute channels.
