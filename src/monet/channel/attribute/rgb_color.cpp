@@ -44,4 +44,6 @@ namespace monet::channel::attribute {
         }
     }
 
+    registry::register_attribute<"rgb_color", rgb_color> _rgb_color_registry;
+
 }

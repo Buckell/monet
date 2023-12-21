@@ -6,6 +6,7 @@
 #define MASTER_SERVER_MONET_HPP
 
 #include "monet/channel/attribute/attribute.hpp"
+#include "monet/channel/attribute/attribute_controller.hpp"
 #include "monet/channel/attribute/intensity.hpp"
 #include "monet/channel/attribute/rgb_color.hpp"
 #include "monet/channel/address_mapping.hpp"
