@@ -38,4 +38,6 @@ namespace monet::channel::attribute {
         }
     }
 
+    registry::register_attribute<"intensity", intensity> _intensity_registry;
+
 }
