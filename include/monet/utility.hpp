@@ -21,6 +21,17 @@ namespace monet {
         }
 
         char value[v_size]{};
+        size_t length = v_size - 1;
+
+        [[nodiscard]]
+        std::string to_string() const noexcept {
+            return {value, length};
+        }
+
+        [[nodiscard]]
+        std::string_view to_string_view() const noexcept {
+            return {value, length};
+        }
     };
 
 #pragma clang diagnostic pop
