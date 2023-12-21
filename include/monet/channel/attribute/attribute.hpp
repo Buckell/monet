@@ -40,6 +40,8 @@ namespace monet::channel::attribute {
         attribute(attribute const&) = delete;
         attribute(attribute&&)      = delete;
 
+        virtual ~attribute() = default;
+
         attribute& operator = (attribute const&) = delete;
         attribute& operator = (attribute&&)      = delete;
 
