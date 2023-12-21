@@ -17,5 +17,6 @@
 #include "monet/console_controller.hpp"
 #include "monet/definitions.hpp"
 #include "monet/server.hpp"
+#include "monet/utility.hpp"
 
 #endif //MASTER_SERVER_MONET_HPP
