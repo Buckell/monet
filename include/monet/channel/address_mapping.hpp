@@ -97,7 +97,7 @@ namespace monet::channel {
 
         /// Interface function to permit structured bindings.
         template <size_t v_index>
-        auto get() {
+        auto get() const {
             if constexpr (v_index == 0) {
                 return attribute_type();
             } else if constexpr (v_index == 1) {
