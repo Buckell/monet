@@ -19,7 +19,7 @@ namespace monet::channel::attribute {
         switch (a_channel) {
             case normal:
                 // Translate to 0-100.
-                return static_cast<uint8_t>((static_cast<double>(m_intensity_value) / 255) * 100);
+                return static_cast<uint8_t>((static_cast<double>(m_intensity_value) / 255.0) * 100.0);
             case base:
             default:
                 return m_intensity_value;
@@ -30,7 +30,7 @@ namespace monet::channel::attribute {
         switch (a_channel) {
             case normal:
                 // Translate to 0-255.
-                m_intensity_value = static_cast<uint8_t>((static_cast<double>(m_intensity_value) / 100) * 255);
+                m_intensity_value = static_cast<uint8_t>((static_cast<double>(a_value) / 100.0) * 255.0);
                 break;
             case base:
             default:
