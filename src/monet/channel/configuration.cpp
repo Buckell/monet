@@ -18,7 +18,13 @@ namespace monet::channel {
     }
 
     size_t configuration::attribute_count(std::string_view const a_attribute_type) const noexcept {
-        auto it = m_attribute_definitions.find(a_attribute_type);
+        auto it = std::find_if(
+            m_attribute_definitions.begin(),
+            m_attribute_definitions.end(),
+            [&](auto const& attribute_list) noexcept -> bool {
+                return attribute_list.first == a_attribute_type;
+            }
+        );
 
         if (it == m_attribute_definitions.cend()) {
             return 0;
@@ -27,12 +33,35 @@ namespace monet::channel {
         }
     }
 
-    void configuration::add_attribute(std::string a_type, attribute_definition a_attribute_definition) {
-        m_attribute_definitions[std::move(a_type)].emplace_back(std::move(a_attribute_definition));
+    void configuration::add_attribute(std::string a_attribute_type, attribute_definition a_attribute_definition) {
+        auto it = std::find_if(
+            m_attribute_definitions.begin(),
+            m_attribute_definitions.end(),
+            [&](auto const& attribute_list) noexcept -> bool {
+                return attribute_list.first == a_attribute_type;
+            }
+        );
+
+        if (it != m_attribute_definitions.cend()) {
+            it->second.emplace_back(std::move(a_attribute_definition));
+        } else {
+            m_attribute_definitions.emplace_back(
+                a_attribute_type,
+                std::vector<attribute_definition>{
+                    std::move(a_attribute_definition)
+                }
+            );
+        }
     }
 
-    std::span<attribute_definition> configuration::attributes(std::string_view const a_type) noexcept {
-        auto it = m_attribute_definitions.find(a_type);
+    std::span<attribute_definition> configuration::attributes(std::string_view const a_attribute_type) noexcept {
+        auto it = std::find_if(
+            m_attribute_definitions.begin(),
+            m_attribute_definitions.end(),
+            [&](auto const& attribute_list) noexcept -> bool {
+                return attribute_list.first == a_attribute_type;
+            }
+        );
 
         if (it == m_attribute_definitions.cend()) {
             return std::span<attribute_definition>{};
@@ -41,8 +70,14 @@ namespace monet::channel {
         }
     }
 
-    std::span<attribute_definition const> configuration::attributes(std::string_view const a_type) const noexcept {
-        auto it = m_attribute_definitions.find(a_type);
+    std::span<attribute_definition const> configuration::attributes(std::string_view const a_attribute_type) const noexcept {
+        auto it = std::find_if(
+            m_attribute_definitions.begin(),
+            m_attribute_definitions.end(),
+            [&](auto const& attribute_list) noexcept -> bool {
+                return attribute_list.first == a_attribute_type;
+            }
+        );
 
         if (it == m_attribute_definitions.cend()) {
             return std::span<attribute_definition>{};

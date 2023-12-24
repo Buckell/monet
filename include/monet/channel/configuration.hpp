@@ -49,7 +49,7 @@ namespace monet::channel {
         /// Name of the channel configuration.
         std::string m_name;
         /// List (by attribute type) of attribute definitions.
-        std::map<std::string, std::vector<attribute_definition>, std::equal_to<>> m_attribute_definitions;
+        std::vector<std::pair<std::string, std::vector<attribute_definition>>> m_attribute_definitions;
         /// Mappings of attribute channels to addresses, in order. Indices are offsets to the base channel address.
         std::vector<address_mapping> m_address_mappings;
 
@@ -100,10 +100,10 @@ namespace monet::channel {
         /**
          * @brief Add an attribute definition.
          *
-         * @param a_type                 The type of the attribute.
+         * @param a_attribute_type       The type of the attribute.
          * @param a_attribute_definition The attribute definition.
          */
-        void add_attribute(std::string a_type, attribute_definition a_attribute_definition);
+        void add_attribute(std::string a_attribute_type, attribute_definition a_attribute_definition);
 
         /**
          * @brief Get all attribute definitions.
@@ -128,22 +128,22 @@ namespace monet::channel {
         /**
          * @brief Get all attribute definitions of a specific type.
          *
-         * @param a_type The type of which attributes to return.
+         * @param a_attribute_type The type of which attributes to return.
          *
          * @return The attribute definitions of the specified type.
          */
         [[nodiscard]]
-        std::span<attribute_definition> attributes(std::string_view a_type) noexcept;
+        std::span<attribute_definition> attributes(std::string_view a_attribute_type) noexcept;
 
         /**
          * @brief Get all attribute definitions of a specific type.
          *
-         * @param a_type The type of which attributes to return.
+         * @param a_attribute_type The type of which attributes to return.
          *
          * @return The attribute definitions of the specified type.
          */
         [[nodiscard]]
-        std::span<attribute_definition const> attributes(std::string_view a_type) const noexcept;
+        std::span<attribute_definition const> attributes(std::string_view a_attribute_type) const noexcept;
 
         /**
          * @brief Get all address mappings for the channel configuration.
