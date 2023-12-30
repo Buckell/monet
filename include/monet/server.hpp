@@ -18,7 +18,7 @@ namespace monet {
         std::atomic_bool m_running;
         std::thread m_main_thread;
 
-        std::unordered_map<size_t, std::unique_ptr<dmx::universe>> m_dmx_universes;
+        std::unordered_map<size_t, std::unique_ptr<address::universe>> m_dmx_universes;
 
         interface::web_panel m_web_panel_interface;
 
@@ -59,94 +59,95 @@ namespace monet {
         void poll();
 
         /**
-         * @brief Create, allocate, and return a new DMX universe.
-
-         * @param a_universe_id The ID with which to create the universe.
+         * @brief Create, allocate, and return a new universe.
+         *
+         * @param a_universe The number with which to create the universe.
          *
          * @return A reference to the created universe.
          *
-         * Create, allocate, and return a new DMX universe with the specified universe ID.
+         * Create, allocate, and return a new universe with the specified universe number.
          */
         [[nodiscard]]
-        dmx::universe& create_dmx_universe(size_t a_universe_id);
+        address::universe& create_universe(size_t a_universe);
 
         /**
-         * @brief Retrieve the DMX universe with the specified ID.
+         * @brief Retrieve the universe with the specified number.
          *
-         * @param a_universe_id The ID of the universe to fetch.
+         * @param a_universe The number of the universe to fetch.
          *
          * @return An optional containing a pointer to the universe if one exists with the ID
-         *         or an empty optional if no DMX universe with the specified ID has been created.
+         *         or an empty optional if no universe with the specified ID has been created.
          */
         [[nodiscard]]
-        std::optional<dmx::universe*> fetch_dmx_universe(size_t a_universe_id);
+        std::optional<address::universe*> fetch_universe(size_t a_universe_id);
 
         /**
-         * @brief Retrieve the DMX universe with the specified ID.
+         * @brief Retrieve the universe with the specified number.
          *
-         * @param a_universe_id The ID of the universe to fetch.
+         * @param a_universe The number of the universe to fetch.
          *
          * @return An optional containing a pointer to the universe if one exists with the ID
-         *         or an empty optional if no DMX universe with the specified ID has been created.
+         *         or an empty optional if no universe with the specified ID has been created.
          */
         [[nodiscard]]
-        std::optional<dmx::universe const*> fetch_dmx_universe(size_t a_universe_id) const;
+        std::optional<address::universe const*> fetch_universe(size_t a_universe) const;
 
         /**
-         * @brief Retrieve the DMX universe with the specified ID.
+         * @brief Retrieve the universe with the specified number.
          *
-         * @param a_universe_id The ID of the universe to get or create.
-         * @return              A reference to the DMX universe with the specified ID.
+         * @param a_universe The number of the universe to get or create.
+         * @return           A reference to the universe with the specified number.
          *
-         * Retrieve the DMX universe with the specified ID, or create one if it does not exist.
+         * Retrieve the universe with the specified number or create one if it does not exist.
          */
         [[nodiscard]]
-        dmx::universe& get_dmx_universe(size_t a_universe_id);
+        address::universe& get_universe(size_t a_universe);
 
         /**
-         * @brief Set the value of a DMX channel.
+         * @brief Set the value of an address.
          *
-         * @param a_universe_id   The ID of the universe in which to set the DMX channel value.
-         * @param a_channel_index The DMX channel number within the specified universe of which to
-         *                        set the value.
-         * @param a_value         The value to which to set the DMX channel.
+         * @param a_universe The number of the universe in which to set the address value.
+         * @param a_address  The address within the specified universe of which to set the value.
+         * @param a_value    The value to which to set the address.
          *
-         * Set the value of a DMX channel. If a channel index of zero is supplied, the start
+         * Set the value of an address. If an address of zero is supplied, the start
          * code of the universe will be set to the value.
          */
-        void set_dmx_channel_value(size_t a_universe_id, size_t a_channel_index, uint8_t a_value);
+        void set_address_value(size_t a_universe, size_t a_address, uint8_t a_value);
 
         /**
-         * @brief Get the value of a DMX channel.
+         * @brief Get the value of an address.
          *
-         * @param a_universe_id   The ID of the universe in which to get the DMX channel value.
-         * @param a_channel_index The DMX channel number within the specified universe of which to
-         *                        get the value.
+         * @param a_universe The number of the universe in which to get the address value.
+         * @param a_address  The address number within the specified universe of which to
+         *                   get the value.
          *
-         * @return The value of the specified DMX channel within the specified DMX universe.
+         * @return The value of the specified address within the specified universe.
          */
         [[nodiscard]]
-        uint8_t get_dmx_channel_value(size_t a_universe_id, size_t a_channel_index) const;
+        uint8_t get_address_value(size_t a_universe, size_t a_address) const;
 
         /**
-         * @brief Set the value of a DMX channel.
+         * @brief Set the value of an address.
          *
-         * @param a_master_id The master ID of the channel to set.
-         * @param a_value     The value to which to set the DMX channel.
+         * @param a_master_address The master address of the channel to set.
+         * @param a_value          The value to which to set the address.
          *
-         * Set the value of a DMX channel. If a master ID of zero is passed, nothing will happen.
+         * Set the value of an address.
+         *
+         * @note If a master address of zero is passed, nothing will happen.
          */
-        void set_dmx_channel_value(size_t a_master_id, uint8_t a_value);
+        void set_address_value(size_t a_master_address, uint8_t a_value);
 
         /**
-         * @brief Get the value of a DMX channel.
+         * @brief Get the value of an address.
          *
-         * @param a_master_id The ID of the channel to set.
+         * @param a_master_address The master address of the value to retrieve.
          *
-         * @return The value of the specified DMX channel.
+         * @return The value of the specified address.
          */
         [[nodiscard]]
-        uint8_t get_dmx_channel_value(size_t a_master_id) const;
+        uint8_t get_address_value(size_t a_master_address) const;
 
         /**
          * @brief Get the internal web panel interface/web server.

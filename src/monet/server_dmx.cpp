@@ -6,12 +6,12 @@
 
 namespace monet {
 
-    dmx::universe& server::create_dmx_universe(size_t const a_universe_id) {
-        auto const it = m_dmx_universes.emplace(a_universe_id, std::make_unique<dmx::universe>());
+    address::universe& server::create_universe(size_t a_universe) {
+        auto const it = m_dmx_universes.emplace(a_universe, std::make_unique<address::universe>());
         return *it.first->second;
     }
 
-    std::optional<dmx::universe*> server::fetch_dmx_universe(size_t const a_universe_id) {
+    std::optional<address::universe*> server::fetch_universe(size_t a_universe_id) {
         auto const it = m_dmx_universes.find(a_universe_id);
 
         if (it == m_dmx_universes.cend()) {
@@ -21,8 +21,8 @@ namespace monet {
         }
     }
 
-    std::optional<dmx::universe const*> server::fetch_dmx_universe(size_t const a_universe_id) const {
-        auto const it = m_dmx_universes.find(a_universe_id);
+    std::optional<address::universe const*> server::fetch_universe(size_t a_universe) const {
+        auto const it = m_dmx_universes.find(a_universe);
 
         if (it == m_dmx_universes.cend()) {
             return std::nullopt;
@@ -31,40 +31,40 @@ namespace monet {
         }
     }
 
-    dmx::universe& server::get_dmx_universe(size_t const a_universe_id) {
-        auto const it = m_dmx_universes.find(a_universe_id);
+    address::universe& server::get_universe(size_t a_universe) {
+        auto const it = m_dmx_universes.find(a_universe);
 
         // Return DMX universe if found or create another if not.
         if (it == m_dmx_universes.cend()) {
-            return create_dmx_universe(a_universe_id);
+            return create_universe(a_universe);
         } else {
             return *it->second;
         }
     }
 
-    void server::set_dmx_channel_value(size_t const a_universe_id, size_t const a_channel_index, uint8_t const a_value) {
-        get_dmx_universe(a_universe_id).set_channel(a_channel_index, a_value);
+    void server::set_address_value(size_t a_universe, size_t a_address, uint8_t a_value) {
+        get_universe(a_universe).set_address(a_address, a_value);
     }
 
-    uint8_t server::get_dmx_channel_value(size_t const a_universe_id, size_t const a_channel_index) const {
-        auto universe_opt = fetch_dmx_universe(a_universe_id);
-        return universe_opt.has_value() ? universe_opt.value()->get_channel(a_channel_index) : 0;
+    uint8_t server::get_address_value(size_t a_universe, size_t a_address) const {
+        auto universe_opt = fetch_universe(a_universe);
+        return universe_opt.has_value() ? universe_opt.value()->address(a_address) : 0;
     }
 
-    void server::set_dmx_channel_value(size_t const a_master_id, uint8_t const a_value) {
+    void server::set_address_value(size_t a_master_address, uint8_t a_value) {
         // Only complete on valid master ID.
-        if (a_master_id > 0) [[likely]] {
-            auto const [universe_id, channel_id] = dmx::from_master_id(a_master_id);
-            get_dmx_universe(universe_id).set_channel(channel_id, a_value);
+        if (a_master_address > 0) [[likely]] {
+            auto const [universe_id, channel_id] = address::from_master_id(a_master_address);
+            get_universe(universe_id).set_address(channel_id, a_value);
         }
     }
 
-    uint8_t server::get_dmx_channel_value(size_t const a_master_id) const {
+    uint8_t server::get_address_value(size_t a_master_address) const {
         // Only complete on valid master ID.
-        if (a_master_id > 0) [[likely]] {
-            auto const [universe_id, channel_id] = dmx::from_master_id(a_master_id);
-            auto universe_opt = fetch_dmx_universe(universe_id);
-            return universe_opt.has_value() ? universe_opt.value()->get_channel(channel_id) : 0;
+        if (a_master_address > 0) [[likely]] {
+            auto const [universe_id, channel_id] = address::from_master_id(a_master_address);
+            auto universe_opt = fetch_universe(universe_id);
+            return universe_opt.has_value() ? universe_opt.value()->address(channel_id) : 0;
         } else {
             return 0;
         }
