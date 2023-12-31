@@ -32,7 +32,7 @@ namespace monet::channel {
          * @param a_attribute_index   The index of the attribute relative to attribute type.
          * @param a_attribute_channel The attribute channel from which to select data.
          */
-        address_mapping(std::string a_attribute_type = "null", size_t const a_attribute_index = 0, std::string a_attribute_channel = "default") noexcept :
+        address_mapping(std::string a_attribute_type = "null", size_t const a_attribute_index = 0, std::string a_attribute_channel = "base") noexcept :
             m_attribute_type(std::move(a_attribute_type)),
             m_attribute_index(a_attribute_index),
             m_attribute_channel(std::move(a_attribute_channel))
