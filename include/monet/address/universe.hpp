@@ -25,7 +25,7 @@ namespace monet::address {
         universe() :
             m_data()
         {
-            m_data.resize(universe_buffer_size);
+            m_data.resize(universe_buffer_size, 0);
         }
 
         /// Retrieve the internal buffer of the universe data (1 byte start code + 512 byte data).
