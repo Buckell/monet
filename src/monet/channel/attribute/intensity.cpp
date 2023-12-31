@@ -8,8 +8,8 @@ namespace monet::channel::attribute {
 
     std::span<std::string_view const> intensity::available_channels() const noexcept {
         static std::vector<std::string_view> const m_available_channels = {
-            "base", // 0-255
-            "normal"   // 0-100
+            "base",  // 0-255
+            "normal" // 0-100
         };
 
         return m_available_channels;
@@ -19,7 +19,7 @@ namespace monet::channel::attribute {
         switch (a_channel) {
             case normal:
                 // Translate to 0-100.
-                return static_cast<uint8_t>((static_cast<double>(m_intensity_value) / 255.0) * 100.0);
+                return static_cast<uint8_t>(std::ceil((static_cast<double>(m_intensity_value) / 255.0) * 100.0));
             case base:
             default:
                 return m_intensity_value;
