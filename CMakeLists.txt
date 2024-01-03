@@ -86,8 +86,8 @@ target_link_libraries(testing
 )
 
 target_include_directories(testing PRIVATE
-    ${GTEST_SOURCE_DIR}/include
-    ${GTEST_SOURCE_DIR}
+    ${gtest_SOURCE_DIR}/include
+    ${gtest_SOURCE_DIR}
 )
 
 include(GoogleTest)

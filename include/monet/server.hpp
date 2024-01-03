@@ -67,7 +67,6 @@ namespace monet {
          *
          * Create, allocate, and return a new universe with the specified universe number.
          */
-        [[nodiscard]]
         address::universe& create_universe(size_t a_universe);
 
         /**
