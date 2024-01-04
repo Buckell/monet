@@ -5,6 +5,8 @@
 #ifndef MASTER_SERVER_CHANNEL_HPP
 #define MASTER_SERVER_CHANNEL_HPP
 
+#include <unordered_map>
+
 #include "attribute/attribute.hpp"
 #include "configuration.hpp"
 
