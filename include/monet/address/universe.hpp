@@ -20,6 +20,8 @@ namespace monet::address {
     class universe {
         /// Internal storage buffer for universe data.
         std::vector<std::uint8_t> m_data;
+        /// Amount of addresses in use.
+        size_t m_address_count;
 
     public:
         universe() :
@@ -46,6 +48,8 @@ namespace monet::address {
         void set_address(size_t const a_index, uint8_t const a_value) noexcept {
             if (a_index < universe_buffer_size) [[likely]] {
                 m_data[a_index] = a_value;
+                // Set address count to include current address if not already.
+                m_address_count = std::max(m_address_count, a_index + 1);
             }
         }
 
@@ -61,6 +65,25 @@ namespace monet::address {
          [[nodiscard]]
          uint8_t address(size_t const a_index) const noexcept {
              return a_index < universe_buffer_size ? m_data[a_index] : 0;
+         }
+
+         /**
+          * @brief Get the amount of addresses in use.
+          *
+          * @return The amount of addresses in use.
+          */
+         [[nodiscard]]
+         size_t address_count() const noexcept {
+             return m_address_count;
+         }
+
+         /**
+          * @brief Set the amount of addresses in use.
+          *
+          * @param a_address_count The new amount of addresses in use.
+          */
+         void set_address_count(size_t a_address_count) noexcept {
+             m_address_count = a_address_count;
          }
     };
 
