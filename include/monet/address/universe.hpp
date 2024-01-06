@@ -25,7 +25,8 @@ namespace monet::address {
 
     public:
         universe() :
-            m_data()
+            m_data(),
+            m_address_count(0)
         {
             m_data.resize(universe_buffer_size, 0);
         }
