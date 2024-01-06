@@ -46,6 +46,11 @@ namespace monet::sink {
         virtual bool initialize(server& a_server) {}
 
         /**
+         * @brief deinitialize the adapter.
+         */
+        virtual void deinitialize() {}
+
+        /**
          * @brief Output data to a specific universe.
          *
          * @param a_universe_number The universe number.
