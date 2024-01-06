@@ -44,23 +44,31 @@ FetchContent_Declare(
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
 # ------------------------------------------------------------------------------
 
-set(INCLUDE_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
-set(INCLUDE_BOOST /dev/boost_1_80_0/boost)
+# --- Fetch LibE1.31 -----------------------------------------------------------
+FetchContent_Declare(
+    libe131
+    GIT_REPOSITORY https://github.com/hhromic/libe131
+    GIT_TAG master
+)
+# ------------------------------------------------------------------------------
 
+FetchContent_MakeAvailable(googletest libe131)
+
+set(INCLUDE_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 set(SOURCE_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
 
 file(GLOB_RECURSE SOURCE_FILES
     ${SOURCE_DIRECTORY}/monet/*.cpp
+    ${libe131_SOURCE_DIR}/src/*.c
 )
 
 include_directories(
     src
     ${OPENSSL_INCLUDE_DIR}
     ${INCLUDE_DIRECTORY}
-    ${INCLUDE_BOOST}
+    ${libe131_SOURCE_DIR}/src
 )
 
 link_libraries(
