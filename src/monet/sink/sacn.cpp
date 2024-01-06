@@ -16,6 +16,12 @@ namespace monet::sink {
         }
     }
 
+    void sacn::deinitialize() {
+        // libE131 doesn't seem to offer a function to close the socket. That's probably an issue, but there
+        // should only be a problem when stopping the server, which will usually only happen upon program exit,
+        // in which case it won't matter.
+    }
+
     void sacn::send_universe(size_t const a_universe_number, address::universe const& a_universe) {
         auto it = m_multicast_packets.find(a_universe_number);
 

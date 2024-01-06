@@ -41,6 +41,11 @@ namespace monet::sink {
         bool initialize(server& a_server) override;
 
         /**
+         * @brief Deinitialize the adapter.
+         */
+        void deinitialize() override;
+
+        /**
          * @brief Output data to a specific universe.
          *
          * @param a_universe_number The universe number.
