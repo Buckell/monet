@@ -14,6 +14,8 @@ namespace monet::sink {
         if (e131_multicast_iface(m_socket_id, 0) < 0) {
             return false;
         }
+
+        return true;
     }
 
     void sacn::deinitialize() {
@@ -31,7 +33,16 @@ namespace monet::sink {
 
         auto& [addr, packet] = *it->second;
 
-        memcpy(&packet.dmp.prop_val + 1, a_universe.buffer(), a_universe.address_count());
+        auto tsize =  std::min(
+                sizeof(packet.dmp.prop_val),
+                a_universe.address_count()
+        );
+
+        std::memcpy(
+            packet.dmp.prop_val + 1,
+            a_universe.buffer() + 1,
+            tsize
+        );
 
         e131_send(m_socket_id, &packet, &addr);
 
@@ -46,7 +57,7 @@ namespace monet::sink {
 
         auto& [addr, packet] = *it->second;
 
-        e131_pkt_init(&packet, 1, 512);
+        e131_pkt_init(&packet, a_universe, 512);
         std::memcpy(
             &packet.frame.source_name,
             m_source_name.data(),

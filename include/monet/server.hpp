@@ -11,6 +11,7 @@
 #include <thread>
 
 #include "interface/web_panel.hpp"
+#include "sink/sink.hpp"
 
 namespace monet {
 
@@ -18,16 +19,24 @@ namespace monet {
         std::atomic_bool m_running;
         std::thread m_main_thread;
 
-        std::unordered_map<size_t, std::unique_ptr<address::universe>> m_dmx_universes;
+        std::unordered_map<size_t, std::unique_ptr<address::universe>> m_universes;
+        std::unique_ptr<sink::sink> m_sink;
+        size_t m_sink_framerate;
+        size_t m_sink_frame_time;
+        std::chrono::high_resolution_clock::time_point m_last_frame_time;
 
         interface::web_panel m_web_panel_interface;
 
     public:
         server() :
-            m_running(false),
-            m_main_thread(),
-            m_dmx_universes(),
-            m_web_panel_interface()
+                m_running(false),
+                m_main_thread(),
+                m_universes(),
+                m_sink(nullptr),
+                m_sink_framerate(default_sink_framerate),
+                m_sink_frame_time(std::nano::den / default_sink_framerate),
+                m_last_frame_time(std::chrono::high_resolution_clock::now()),
+                m_web_panel_interface()
         {}
 
         server(server const&) = delete;
@@ -166,6 +175,43 @@ namespace monet {
         [[nodiscard]]
         interface::web_panel const& web_panel_interface() const noexcept {
             return m_web_panel_interface;
+        }
+
+        /**
+         * @brief Get the current sink interface.
+         *
+         * @return A pointer to the sink interface.
+         */
+        [[nodiscard]]
+        sink::sink* sink_interface() noexcept {
+            return m_sink.get();
+        }
+
+        /**
+         * @brief Get the current sink interface.
+         *
+         * @return A pointer to the sink interface.
+         */
+        [[nodiscard]]
+        sink::sink const* sink_interface() const noexcept {
+            return m_sink.get();
+        }
+
+        /**
+         * @brief Set the sink interface.
+         *
+         * @param a_sink The sink interface.
+         *
+         * @note The current sink's lifetime is managed by the server. There is no need to
+         * explicitly delete or otherwise explicitly manage its lifetime. Do not delete it
+         * while it is in use by the server.
+         */
+        void set_sink_interface(sink::sink* a_sink) noexcept {
+            if (m_running) {
+                a_sink->initialize(*this);
+            }
+
+            m_sink = std::unique_ptr<sink::sink>(a_sink);
         }
     };
 

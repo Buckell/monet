@@ -14,6 +14,7 @@ namespace monet {
 
     constexpr uint16_t default_web_panel_port = 8080;
 
+    constexpr size_t default_sink_framerate = 20;
 
     namespace channel {
 

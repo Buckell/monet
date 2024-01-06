@@ -43,7 +43,9 @@ namespace monet::sink {
          *
          * @param a_server A reference to the host server instance.
          */
-        virtual bool initialize(server& a_server) {}
+        virtual bool initialize(server& a_server) {
+            return true;
+        }
 
         /**
          * @brief deinitialize the adapter.
