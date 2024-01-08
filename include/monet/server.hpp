@@ -213,6 +213,26 @@ namespace monet {
 
             m_sink = std::unique_ptr<sink::sink>(a_sink);
         }
+
+        /**
+         * @brief Get the framerate of the sink updating.
+         *
+         * @return The sink framerate.
+         */
+        [[nodiscard]]
+        size_t sink_framerate() const noexcept {
+            return m_sink_framerate;
+        }
+
+        /**
+         * @brief Set the framerate of the sink updating.
+         *
+         * @param a_framerate The new sink framerate.
+         */
+        void set_sink_framerate(size_t const a_framerate) noexcept {
+            m_sink_frame_time = std::nano::den / a_framerate;
+            m_sink_framerate = a_framerate;
+        }
     };
 
 }
