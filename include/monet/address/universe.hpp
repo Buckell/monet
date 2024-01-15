@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <cstdint>
+#include <span>
+#include <cstring>
 
 #include "../definitions.hpp"
 
@@ -45,6 +47,7 @@ namespace monet::address {
 
         /**
          * @brief Set the value for a address.
+         *
          * @param a_index The index of the address to change.
          * @param a_value The new value to which to set the address.
          *
@@ -57,6 +60,22 @@ namespace monet::address {
                 m_data[a_index] = a_value;
                 // Set address count to include current address if not already.
                 m_address_count = std::max(m_address_count, a_index + 1);
+            }
+        }
+
+        /**
+         * @brief Set the values for a set of addresses.
+         *
+         * @param a_index The starting address to set the values.
+         * @param a_values The new values to which to set the addresses.
+         *
+         * The same as set_addresses but optimized for multiple values
+         */
+        void set_addresses(size_t const a_index, std::span<uint8_t> const a_values) noexcept {
+            if (a_index + a_values.size() <= universe_buffer_size) [[likely]] {
+                std::memcpy(m_data.data() + a_index, a_values.data(), a_values.size());
+                // Set address count to include current addresses if not already.
+                m_address_count = std::max(m_address_count, a_index + a_values.size());
             }
         }
 
