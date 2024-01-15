@@ -37,6 +37,12 @@ namespace monet::address {
             return m_data.data();
         }
 
+        /// Retrieve the internal buffer of the universe data (1 byte start code + 512 byte data).
+        [[nodiscard]]
+        uint8_t* buffer() noexcept {
+            return m_data.data();
+        }
+
         /**
          * @brief Set the value for a address.
          * @param a_index The index of the address to change.
