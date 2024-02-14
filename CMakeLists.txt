@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23)
+cmake_minimum_required(VERSION 3.7.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -22,7 +22,6 @@ endif()
 # ------------------------------------------------------------------------------
 
 # --- Fetch OpenSSL ------------------------------------------------------------
-set(OPENSSL_ROOT_DIR "C:/Program Files/OpenSSL-Win64")
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 

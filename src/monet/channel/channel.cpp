@@ -86,4 +86,27 @@ namespace monet::channel {
         return address_values;
     }
 
+    void channel::find_universe() {
+        if (!m_server || m_base_address == 0) {
+            m_universe = nullptr;
+            m_address = 0;
+            return;
+        }
+
+        auto [universe, address] = address::from_master_id(m_base_address);
+
+        m_universe = &m_server->get_universe(universe);
+        m_address = address;
+    }
+
+    void channel::push_updates() {
+        if (!m_universe) {
+            return;
+        }
+
+        auto [address, values] = address_info();
+
+        m_universe->set_addresses(address, values);
+    }
+
 }

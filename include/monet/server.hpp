@@ -27,6 +27,8 @@ namespace monet {
 
         interface::web_panel m_web_panel_interface;
 
+        std::unordered_map<size_t, std::unique_ptr<channel::channel>> m_channels;
+
     public:
         server() :
                 m_running(false),
@@ -233,6 +235,49 @@ namespace monet {
             m_sink_frame_time = std::nano::den / a_framerate;
             m_sink_framerate = a_framerate;
         }
+
+        /**
+         * @brief Get a channel by its ID.
+         *
+         * @param a_id The channel ID.
+         *
+         * @return A pointer to the channel with the specified ID or nullptr if no channel is
+         *         connected to the given ID.
+         */
+        [[nodiscard]]
+        channel::channel* channel_by_number(size_t a_id) noexcept;
+
+        /**
+         * @brief Get a channel by its ID.
+         *
+         * @param a_id The channel ID.
+         *
+         * @return A pointer to the channel with the specified ID or nullptr if no channel is
+         *         connected to the given ID.
+         */
+        [[nodiscard]]
+        channel::channel const* channel_by_number(size_t a_id) const noexcept;
+
+        /**
+         * @brief Create a new channel with the given ID and configuration.
+         *
+         * @param a_id            The ID of the new channel.
+         * @param a_configuration The configuration with which to create the new channel.
+         * @param a_base_address  The base address to which the address values of the channel will be mapped.
+         *
+         * @return The newly created channel.
+         *
+         * @note If a channel with the supplied ID already exists, it will be overwritten.
+         */
+        channel::channel& create_channel(size_t a_id, channel::configuration& a_configuration, size_t a_base_address = 0);
+
+
+        /**
+         * @brief Delete a channel by its ID.
+         *
+         * @param a_id The ID of the channel to delete.
+         */
+        void delete_channel(size_t a_id) noexcept;
     };
 
 }

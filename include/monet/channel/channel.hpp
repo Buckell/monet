@@ -10,8 +10,11 @@
 #include "attribute/attribute.hpp"
 #include "configuration.hpp"
 
-namespace monet::channel {
+namespace monet {
+    class server;
+}
 
+namespace monet::channel {
     /**
      * @brief Represents a channel with all of its attributes.
      */
@@ -23,18 +26,28 @@ namespace monet::channel {
         /// The base address the address mappings will use to assign attribute values to addresses.
         size_t m_base_address;
 
+        server* m_server;
+        address::universe* m_universe;
+        size_t m_address;
+
     public:
         /**
          * @brief Construct a channel based on a channel configuration.
          *
          * @param a_configuration The configuration on which to derive the channel.
+         * @param a_server        The server hosting the channel.
+         * @param a_base_address  The base address to which all the address values will be mapped.
          */
-        explicit channel(configuration& a_configuration) noexcept :
+        explicit channel(configuration& a_configuration, server* a_server = nullptr, size_t const a_base_address = 0) noexcept :
             m_configuration(a_configuration),
             m_attributes(),
-            m_base_address(0)
+            m_base_address(a_base_address),
+            m_server(a_server),
+            m_universe(nullptr),
+            m_address(0)
         {
             propagate_attributes();
+            find_universe();
         }
 
         channel(channel const&) = delete;
@@ -148,6 +161,7 @@ namespace monet::channel {
          */
         void set_base_address(size_t const a_base_address) noexcept {
             m_base_address = a_base_address;
+            find_universe();
         }
 
         /**
@@ -169,6 +183,25 @@ namespace monet::channel {
          */
         [[nodiscard]]
         std::vector<uint8_t> fetch_address_values() const noexcept;
+
+        /**
+         * @brief Return a packed version of the base address and address values.
+         *
+         * @return The base address and address values in sequential order.
+         */
+        [[nodiscard]]
+        std::pair<size_t, std::vector<uint8_t>> address_info() const noexcept {
+            return {base_address(), fetch_address_values()};
+        }
+
+        /**
+         * @brief Commit address value updates to the target universe.
+         */
+        void push_updates();
+
+    private:
+        /// Assign m_universe and m_address according to m_base_address;
+        void find_universe();
     };
 
 }
