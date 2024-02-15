@@ -22,9 +22,7 @@ namespace monet::channel {
     }
 
     std::span<std::unique_ptr<attribute::attribute>> channel::attributes(std::string_view const a_type) noexcept {
-        auto it = m_attributes.find(a_type);
-
-        if (it == m_attributes.cend()) {
+        if (auto const it = m_attributes.find(a_type); it == m_attributes.cend()) {
             return std::span<std::unique_ptr<attribute::attribute>>{};
         } else {
             return it->second;
@@ -32,9 +30,7 @@ namespace monet::channel {
     }
 
     std::span<std::unique_ptr<attribute::attribute> const> channel::attributes(std::string_view const a_type) const noexcept {
-        auto it = m_attributes.find(a_type);
-
-        if (it == m_attributes.cend()) {
+        if (auto const it = m_attributes.find(a_type); it == m_attributes.cend()) {
             return std::span<std::unique_ptr<attribute::attribute>>{};
         } else {
             return it->second;
@@ -69,13 +65,11 @@ namespace monet::channel {
         address_values.reserve(attribute_count());
 
         for (auto const& [type, index, channel] : m_configuration.address_mappings()) {
-            auto it = m_attributes.find(type);
-
-            if (it != m_attributes.cend()) {
+            if (auto const it = m_attributes.find(type); it != m_attributes.cend()) {
                 if (channel.empty()) {
                     address_values.emplace_back(it->second[index]->value(0));
                 } else {
-                    auto id = it->second[index]->channel_name_to_id(channel);
+                    auto const id = it->second[index]->channel_name_to_id(channel);
                     address_values.emplace_back(it->second[index]->value(id));
                 }
             } else {
@@ -99,7 +93,7 @@ namespace monet::channel {
         m_address = address;
     }
 
-    void channel::push_updates() {
+    void channel::push_updates() const {
         if (!m_universe) {
             return;
         }
@@ -107,6 +101,36 @@ namespace monet::channel {
         auto [address, values] = address_info();
 
         m_universe->set_addresses(address, values);
+    }
+
+    void channel::set_intensity(uint8_t const a_intensity) noexcept {
+        if (auto const intensities = attributes("intensity"); !intensities.empty()) {
+            intensities[0]->set_value(monet::channel::attribute::intensity::normal, a_intensity);
+
+            push_updates();
+        }
+    }
+
+    void channel::set_rgb_color(uint8_t const a_red, uint8_t const a_green, uint8_t const a_blue) noexcept {
+        if (auto const rgb_colors = attributes("rgb_color"); !rgb_colors.empty()) {
+            auto const& rgb_color = rgb_colors[0];
+            rgb_color->set_value(monet::channel::attribute::rgb_color::red,   a_red);
+            rgb_color->set_value(monet::channel::attribute::rgb_color::green, a_green);
+            rgb_color->set_value(monet::channel::attribute::rgb_color::blue,  a_blue);
+        }
+
+        push_updates();
+    }
+
+    void channel::set_rgb_color(uint32_t const a_color) noexcept {
+        union {
+            uint32_t value;
+            uint8_t channel[4];
+        } color{};
+
+        color.value = a_color;
+
+        set_rgb_color(color.channel[2], color.channel[1], color.channel[0]);
     }
 
 }

@@ -40,7 +40,6 @@ namespace monet::channel {
          */
         explicit channel(configuration& a_configuration, server* a_server = nullptr, size_t const a_base_address = 0) noexcept :
             m_configuration(a_configuration),
-            m_attributes(),
             m_base_address(a_base_address),
             m_server(a_server),
             m_universe(nullptr),
@@ -195,9 +194,32 @@ namespace monet::channel {
         }
 
         /**
+         * @brief Set the intensity of the channel from 0 to 100.
+         *
+         * @param a_intensity The intensity to set the channel (0-100).
+         */
+        void set_intensity(uint8_t a_intensity) noexcept;
+
+        /**
+         * @brief Set the color of the channel.
+         *
+         * @param a_red   The red value with which to set the color.
+         * @param a_green The green value with which to set the color.
+         * @param a_blue  The blue value with which to set the color.
+         */
+        void set_rgb_color(uint8_t a_red, uint8_t a_green, uint8_t a_blue) noexcept;
+
+        /**
+         * @brief Set the color of the channel.
+         *
+         * @param a_color The 24-bit RGB color value with which to set the color.
+         */
+        void set_rgb_color(uint32_t a_color) noexcept;
+
+        /**
          * @brief Commit address value updates to the target universe.
          */
-        void push_updates();
+        void push_updates() const;
 
     private:
         /// Assign m_universe and m_address according to m_base_address;
