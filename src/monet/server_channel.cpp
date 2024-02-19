@@ -7,13 +7,13 @@
 namespace monet {
 
     channel::channel* server::channel_by_number(size_t const a_id) noexcept {
-        auto it = m_channels.find(a_id);
+        auto const it = m_channels.find(a_id);
 
         return it != m_channels.cend() ? it->second.get() : nullptr;
     }
 
     channel::channel const* server::channel_by_number(size_t const a_id) const noexcept {
-        auto it = m_channels.find(a_id);
+        auto const it = m_channels.find(a_id);
 
         return it != m_channels.cend() ? it->second.get() : nullptr;
     }
@@ -25,4 +25,25 @@ namespace monet {
     void server::delete_channel(size_t const a_id) noexcept {
         m_channels.erase(a_id);
     }
+
+    channel::configuration& server::channel_configuration(std::string_view const a_name) noexcept {
+        if (auto const it = m_configurations.find(a_name); it != m_configurations.cend()) {
+            return it->second;
+        }
+
+        return m_configurations.emplace(std::string(a_name), channel::configuration(std::string(a_name))).first->second;
+    }
+
+    channel::configuration const& server::channel_configuration(std::string_view const a_name) const noexcept {
+        if (auto const it = m_configurations.find(a_name); it != m_configurations.cend()) {
+            return it->second;
+        }
+
+        throw std::out_of_range("a configuration with this name does not exist");
+    }
+
+    bool server::channel_configuration_exists(std::string_view const a_name) const noexcept {
+        return m_configurations.contains(a_name);
+    }
+
 }

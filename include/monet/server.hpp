@@ -27,6 +27,7 @@ namespace monet {
 
         interface::web_panel m_web_panel_interface;
 
+        std::map<std::string, channel::configuration, std::equal_to<>> m_configurations;
         std::unordered_map<size_t, std::unique_ptr<channel::channel>> m_channels;
 
     public:
@@ -237,6 +238,33 @@ namespace monet {
         }
 
         /**
+         * @brief Get the channel configuration by the given name or create one if it does not exist.
+         *
+         * @param a_name The name of the channel configuration.
+         *
+         * @return A reference to the channel configuration.
+         */
+        channel::configuration& channel_configuration(std::string_view a_name) noexcept;
+
+        /**
+         * @brief Get the channel configuration by the given name.
+         *
+         * @param a_name The name of the channel configuration.
+         *
+         * @return A reference to the channel configuration.
+         *
+         * @note Throws an error if the configuration does not exist.
+         */
+        channel::configuration const& channel_configuration(std::string_view a_name) const noexcept;
+
+        /**
+         * @brief Checks if a channel configuration with the given name exists.
+         *
+         * @return Whether the configuration exists.
+         */
+        bool channel_configuration_exists(std::string_view a_name) const noexcept;
+
+        /**
          * @brief Get a channel by its ID.
          *
          * @param a_id The channel ID.
@@ -270,7 +298,6 @@ namespace monet {
          * @note If a channel with the supplied ID already exists, it will be overwritten.
          */
         channel::channel& create_channel(size_t a_id, channel::configuration& a_configuration, size_t a_base_address = 0);
-
 
         /**
          * @brief Delete a channel by its ID.
