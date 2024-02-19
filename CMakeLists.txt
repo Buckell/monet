@@ -22,6 +22,7 @@ endif()
 # ------------------------------------------------------------------------------
 
 # --- Fetch OpenSSL ------------------------------------------------------------
+set(OPENSSL_ROOT_DIR "C:/Program Files/OpenSSL-Win64")
 set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
@@ -74,8 +75,7 @@ link_libraries(
     ftxui::screen
     ftxui::dom
     ftxui::component
-    OpenSSL::SSL
-    OpenSSL::Crypto
+    ${OPENSSL_LIBRARIES}
 )
 
 project(master_server)

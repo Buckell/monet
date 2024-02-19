@@ -83,7 +83,7 @@ namespace monet {
         /**
          * @brief Retrieve the universe with the specified number.
          *
-         * @param a_universe The number of the universe to fetch.
+         * @param a_universe_id The number of the universe to fetch.
          *
          * @return An optional containing a pointer to the universe if one exists with the ID
          *         or an empty optional if no universe with the specified ID has been created.

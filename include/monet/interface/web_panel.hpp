@@ -12,12 +12,20 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include <httplib.h>
 #undef interface
+#include <json.hpp>
 
 #include "../definitions.hpp"
 
 namespace monet::interface {
 
     class web_panel {
+    public:
+        struct handler {
+            std::function<void (httplib::Request const&, httplib::Response&)> callback;
+            bool authenticate = false;
+        };
+
+    private:
         std::thread m_main_thread;
 
         std::unique_ptr<httplib::SSLServer> m_server;
@@ -26,6 +34,9 @@ namespace monet::interface {
 
         std::string m_certificate_file;
         std::string m_private_key_file;
+
+        std::unordered_map<std::string, handler> m_api_get_handlers;
+        std::unordered_map<std::string, handler> m_api_post_handlers;
 
     public:
         web_panel() :
@@ -100,6 +111,36 @@ namespace monet::interface {
         uint16_t port() const noexcept {
             return m_port;
         }
+
+        /**
+         * @brief Test a request's Authorization header.
+         *
+         * @param a_request The request of the header to check.
+         *
+         * @return Whether the authentication is successful or not.
+         */
+        [[nodiscard]]
+        bool authenticate(httplib::Request const& a_request) const noexcept;
+
+        /**
+         * @brief Register an API POST request handler.
+         *
+         * @param a_path    The endpoint (relative to /api/).
+         * @param a_handler The handler.
+         */
+        void api_get(std::string a_path, handler a_handler);
+
+        /**
+         * @brief Register an API GET request handler.
+         *
+         * @param a_path    The endpoint (relative to /api/).
+         * @param a_handler The handler.
+         */
+        void api_post(std::string a_path, handler a_handler);
+
+    private:
+        /// Setup API endpoints for the panel.
+        void setup_api_endpoints();
     };
 
 }
