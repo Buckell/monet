@@ -290,14 +290,14 @@ namespace monet {
          * @brief Create a new channel with the given ID and configuration.
          *
          * @param a_id            The ID of the new channel.
-         * @param a_configuration The configuration with which to create the new channel.
+         * @param a_configuration The name of the configuration with which to create the new channel.
          * @param a_base_address  The base address to which the address values of the channel will be mapped.
          *
          * @return The newly created channel.
          *
          * @note If a channel with the supplied ID already exists, it will be overwritten.
          */
-        channel::channel& create_channel(size_t a_id, channel::configuration& a_configuration, size_t a_base_address = 0);
+        channel::channel& create_channel(size_t a_id, std::string_view a_configuration, size_t a_base_address = 0);
 
         /**
          * @brief Delete a channel by its ID.

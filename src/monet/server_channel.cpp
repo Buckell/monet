@@ -18,8 +18,8 @@ namespace monet {
         return it != m_channels.cend() ? it->second.get() : nullptr;
     }
 
-    channel::channel& server::create_channel(size_t const a_id, channel::configuration& a_configuration, size_t const a_base_address) {
-        return *m_channels.emplace(a_id, std::make_unique<channel::channel>(a_configuration, this, a_base_address)).first->second;
+    channel::channel& server::create_channel(size_t const a_id, std::string_view const a_configuration, size_t const a_base_address) {
+        return *m_channels.emplace(a_id, std::make_unique<channel::channel>(channel_configuration(a_configuration), this, a_base_address)).first->second;
     }
 
     void server::delete_channel(size_t const a_id) noexcept {
