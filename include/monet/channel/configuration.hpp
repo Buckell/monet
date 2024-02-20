@@ -54,6 +54,10 @@ namespace monet::channel {
         std::vector<address_mapping> m_address_mappings;
 
     public:
+        configuration() :
+            m_name()
+        {}
+
         /**
          * @brief Create a channel configuration.
          *
