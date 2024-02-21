@@ -34,8 +34,10 @@ namespace monet::channel::attribute {
         switch (a_channel) {
             case red:
                 m_red = a_value;
+                break;
             case green:
                 m_green = a_value;
+                break;
             case blue:
                 m_blue = a_value;
                 break;
