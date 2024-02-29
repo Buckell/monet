@@ -27,7 +27,7 @@ namespace monet {
 
         interface::web_panel m_web_panel_interface;
 
-        std::map<std::string, channel::configuration, std::equal_to<>> m_configurations;
+        std::map<std::string_view, std::unique_ptr<channel::configuration>> m_configurations;
         std::unordered_map<size_t, std::unique_ptr<channel::channel>> m_channels;
 
     public:
@@ -265,6 +265,15 @@ namespace monet {
         bool channel_configuration_exists(std::string_view a_name) const noexcept;
 
         /**
+         * @brief Get a list of channel configurations.
+         *
+         * @return The list of channel configurations.
+         */
+        auto& channel_configurations() noexcept {
+            return m_configurations;
+        }
+
+        /**
          * @brief Get a channel by its ID.
          *
          * @param a_id The channel ID.
@@ -305,6 +314,24 @@ namespace monet {
          * @param a_id The ID of the channel to delete.
          */
         void delete_channel(size_t a_id) noexcept;
+
+        /**
+         * @brief Get a list of channels.
+         *
+         * @return The list of channels.
+         */
+        auto& channels() noexcept {
+            return m_channels;
+        }
+
+        /**
+         * @brief Get a list of channels.
+         *
+         * @return The list of channels.
+         */
+        auto const& channels() const noexcept {
+            return m_channels;
+        }
     };
 
 }

@@ -28,15 +28,17 @@ namespace monet {
 
     channel::configuration& server::channel_configuration(std::string_view const a_name) noexcept {
         if (auto const it = m_configurations.find(a_name); it != m_configurations.cend()) {
-            return it->second;
+            return *it->second;
         }
 
-        return m_configurations.emplace(std::string(a_name), channel::configuration(std::string(a_name))).first->second;
+        auto configuration = std::make_unique<channel::configuration>(std::string(a_name));
+
+        return *m_configurations.emplace(configuration->name(), std::move(configuration)).first->second;
     }
 
     channel::configuration const& server::channel_configuration(std::string_view const a_name) const noexcept {
         if (auto const it = m_configurations.find(a_name); it != m_configurations.cend()) {
-            return it->second;
+            return *it->second;
         }
 
         throw std::out_of_range("a configuration with this name does not exist");
