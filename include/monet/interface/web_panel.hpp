@@ -26,6 +26,8 @@ namespace monet::interface {
         };
 
     private:
+        server& m_host;
+
         std::thread m_main_thread;
 
         std::unique_ptr<httplib::SSLServer> m_server;
@@ -39,7 +41,8 @@ namespace monet::interface {
         std::unordered_map<std::string, handler> m_api_post_handlers;
 
     public:
-        web_panel() :
+        explicit web_panel(server& a_host) :
+            m_host(a_host),
             m_main_thread(),
             m_server(nullptr),
             m_port(default_web_panel_port),

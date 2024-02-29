@@ -39,7 +39,7 @@ namespace monet {
                 m_sink_framerate(default_sink_framerate),
                 m_sink_frame_time(std::nano::den / default_sink_framerate),
                 m_last_frame_time(std::chrono::high_resolution_clock::now()),
-                m_web_panel_interface()
+                m_web_panel_interface(*this)
         {}
 
         server(server const&) = delete;
