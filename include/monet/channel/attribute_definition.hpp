@@ -70,6 +70,26 @@ namespace monet::channel {
         }
 
         /**
+         * @brief Get a list of properties.
+         *
+         * @return A list of properties.
+         */
+        [[nodiscard]]
+        auto& properties() noexcept {
+            return m_properties;
+        }
+
+        /**
+         * @brief Get a list of properties.
+         *
+         * @return A list of properties.
+         */
+        [[nodiscard]]
+        auto const& properties() const noexcept {
+            return m_properties;
+        }
+
+        /**
          * @brief Get the value of a property.
          *
          * @param a_property_name The name of the property.
