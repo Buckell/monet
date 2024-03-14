@@ -19,6 +19,8 @@
 #include "monet/interface/web_panel.hpp"
 #include "monet/sink/sacn.hpp"
 #include "monet/sink/sink.hpp"
+#include "monet/storage/document.hpp"
+#include "monet/storage/adapter.hpp"
 #include "monet/console_controller.hpp"
 #include "monet/definitions.hpp"
 #include "monet/server.hpp"
