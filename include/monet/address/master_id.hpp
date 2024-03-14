@@ -6,6 +6,7 @@
 #define MASTER_SERVER_MASTER_ID_HPP
 
 #include <tuple>
+#include <cmath>
 
 #include "../definitions.hpp"
 
@@ -31,7 +32,7 @@ namespace monet::address {
         // Determine remainder.
         auto const address = a_master_address - universe * dmx_data_channel_count;
 
-        return { universe + 1, address};
+        return { universe + 1, address };
     }
 
     /**

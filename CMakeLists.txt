@@ -23,7 +23,6 @@ endif()
 
 # --- Fetch OpenSSL ------------------------------------------------------------
 set(OPENSSL_ROOT_DIR "C:/Program Files/OpenSSL-Win64")
-set(OPENSSL_USE_STATIC_LIBS TRUE)
 find_package(OpenSSL REQUIRED)
 
 set(OPENSSL_INCLUDE_DIR "C:/Program Files/OpenSSL-Win64/include")
@@ -54,7 +53,26 @@ FetchContent_Declare(
 )
 # ------------------------------------------------------------------------------
 
-FetchContent_MakeAvailable(googletest libe131)
+# --- Fetch SQLiteCpp ----------------------------------------------------------
+FetchContent_Declare(
+        sqlite
+        GIT_REPOSITORY https://github.com/SRombauts/SQLiteCpp
+        GIT_TAG master
+)
+# ------------------------------------------------------------------------------
+
+# --- Fetch fmt ----------------------------------------------------------
+FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY https://github.com/fmtlib/fmt
+        GIT_TAG master
+)
+
+# Bricks MSVC on C++20.
+add_compile_definitions(FMT_USE_USER_DEFINED_LITERALS=0)
+# ------------------------------------------------------------------------------
+
+FetchContent_MakeAvailable(googletest libe131 sqlite fmt)
 
 set(INCLUDE_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 set(SOURCE_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
@@ -62,6 +80,9 @@ set(SOURCE_DIRECTORY ${CMAKE_SOURCE_DIR}/src)
 file(GLOB_RECURSE SOURCE_FILES
     ${SOURCE_DIRECTORY}/monet/*.cpp
     ${libe131_SOURCE_DIR}/src/*.c
+    ${sqlite_SOURCE_DIR}/src/*.cpp
+    ${sqlite_SOURCE_DIR}/sqlite3/*.c
+    ${fmt_SOURCE_DIR}/src/format.cc
 )
 
 include_directories(
@@ -69,6 +90,9 @@ include_directories(
     ${OPENSSL_INCLUDE_DIR}
     ${INCLUDE_DIRECTORY}
     ${libe131_SOURCE_DIR}/src
+    ${sqlite_SOURCE_DIR}/include
+    ${sqlite_SOURCE_DIR}/sqlite3
+    ${fmt_SOURCE_DIR}/include
 )
 
 link_libraries(

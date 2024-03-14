@@ -20,6 +20,7 @@
 #include "monet/sink/sacn.hpp"
 #include "monet/sink/sink.hpp"
 #include "monet/storage/adapters/json_adapter.hpp"
+#include "monet/storage/adapters/sqlite_adapter.hpp"
 #include "monet/storage/document.hpp"
 #include "monet/storage/adapter.hpp"
 #include "monet/console_controller.hpp"

@@ -55,7 +55,7 @@ namespace monet::storage {
         *
         * @return The document with the given name.
         */
-        std::shared_ptr<document> doc(std::string_view a_name) noexcept {
+        std::shared_ptr<document> doc(std::string_view const a_name) noexcept {
             return create_doc(std::string(a_name));
         }
     };
